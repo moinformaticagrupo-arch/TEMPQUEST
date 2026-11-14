@@ -1,0 +1,15 @@
+NEXUS NOC conectado a MySQL
+
+Archivos
+- nexus_noc_dashboard.html: panel; consulta api.php cada 5 segundos.
+- api.php: API PHP de solo lectura para la tabla mediciones.
+
+Requisitos
+- PHP 8+ con extensiones PDO y pdo_mysql.
+- MySQL con el dump cargado en la base sensores_db.
+- Servir ambos archivos desde la misma carpeta mediante Apache/PHP (por ejemplo, dentro de htdocs de XAMPP). No abrir el HTML con doble clic: fetch necesita un servidor.
+
+Conexión
+api.php usa MYSQL_HOST (por defecto 127.0.0.1), MYSQL_DATABASE (sensores_db), MYSQL_USER (root) y MYSQL_PASSWORD (vacía si no está definida). Configurá usuario y clave en el entorno del servidor PHP; no guardes credenciales en el HTML. Para producción, usá un usuario MySQL de solo lectura con permiso SELECT sobre sensores_db.mediciones.
+
+El panel muestra las últimas lecturas reales, historial, gráfico y registros consultados. Las simulaciones del modo laboratorio siguen siendo locales y no se insertan en MySQL. El dump no especifica qué sensor debe elegirse: por defecto el panel muestra mediciones de todos los dispositivos; podés filtrar pasando device_id a api.php.
